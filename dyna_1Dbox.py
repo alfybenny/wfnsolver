@@ -82,18 +82,22 @@ for i in range(0, len(cn)):
 
 # Time evolution of wavepacket=============================
 psi_total_time = np.zeros(len(x), dtype=complex) # Empty array
-
+sig_cn = np.zeros(len(x), dtype=complex)
 t = np.linspace(0, 10000, 500) # Total time and timesteps
 
 for j in range(0, len(t)):
     for i in range(0, len(cn)):
         psi_total_time += cn[i] * phi(x, n[i], L) * prop(n[i], L, t[j])
-    
+        sig_cn += cn[i]*np.conj(cn[i])
+        
+    norm_psi_total_time = psi_total_time/sig_cn
     # Output-----------------------------------------------
-    plt.plot(x, np.real(psi_total_time), 'red')
+    plt.ylim(-1,1)
+    plt.plot(x, np.real(norm_psi_total_time), 'red')
     plt.savefig('dyna_'+str(j)+'.png')
     plt.close()
     psi_total_time = np.zeros(len(x), dtype=complex) # Restarting dynamic array for t + dt
+    sig_cn = np.zeros(len(x), dtype=complex)
 
 # Plot fourier coefficients--------------------------------
 plt.close()
