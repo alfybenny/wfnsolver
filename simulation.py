@@ -10,34 +10,50 @@ import basis
 import tools
 from matplotlib import pyplot as plt
 
+# Fundamental parameters for the simulation------
+L = 10 # x axis from 0 to L
+x_resolution = 2000 # x axis resolution
+x = np.linspace(0, L, x_resolution)
+
+# Total time for the simulation------------------
+t = np.linspace(0, 10, 100)
+
+# Number of basis sets used to define wavepacket-
+n = np.linspace(1, 150, 150)
+
 # Initial wavepacket-----------------------------
-L = 10
-x = np.linspace(0, L, 2000)
-sigma = 0.3
-x0 = 4.0
-k0 = -10
+sigma = 0.5 # Gaussian wavepacket 
+x0 = 5.0 # Initial position of wavepacket
+k0 = 5.0 # Momentum of wavepacket
+
+# Define wavepacket =
+## 1. Gaussian: w_packet.gauss
+## 2. Lorenzian (To be implimented)
 
 wavepacket_type = w_packet.gauss(sigma, x, x0, k0)
-psi_x = wavepacket_type.construct_wpkt()
-# print(psi_x.construct_wpkt())
+psi_x = wavepacket_type.construct_wpkt() # Construct the wavepacket
+
 
 # Basis_set--------------------------------------
+## 1. Particle in a box: particle_box
+## 2. Harmonic oscillator: harm_pot
 
-n = np.linspace(1, 100, 100)
+# basis_type = 'particle_box'
+#------------------------------------------------
 
-basis_type = 'particle_box'
+cn = tools.get_coeff(x, psi_x, n) # Get coefficients
 
-cn = tools.get_coeff(x, psi_x, n)
-
-initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x)
-
+initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x) # Get initial wavepacket
+                                                       # in terms of the basis
+                                                       
+# Plot and compare the original wavepacket and the fitted one
 plt.plot(x, np.real(psi_x))
 plt.plot(x, np.real(initial_wpkt))
-plt.show()
+plt.savefig('initial_wavepacket.png')
 plt.close()
 
-# test = basis.harm_pot(x, 1000)
-# test1 = test.wfn()
 
-# plt.plot(x, test1)
-# plt.show()
+# Propogate--------------------------------------
+tools.propogate(x, n, cn, t)
+
+
