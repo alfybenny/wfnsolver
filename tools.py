@@ -73,6 +73,10 @@ def propogate(x, n, cn, t):
         norm_constant = np.linalg.norm(store_wave_t)
         norm_wave_t = store_wave_t / norm_constant
         
+        basis_type = basis.harm_pot(x, n)
+        pot = basis_type.potential()
+        plt.plot(x, pot)
+        
         plt.plot(x, abs(store_wave_t))
         # plt.plot(x, abs(norm_wave_t))
         plt.ylim([0,1])

@@ -24,6 +24,10 @@ class basis_set:
     @abstractmethod
     def energy(self, m):
         pass
+    
+    @abstractmethod
+    def potential():
+        pass
 
 # SUBCLASS=======================================
     
@@ -40,6 +44,9 @@ class particle_box(basis_set):
     def energy(self, n):
         En = (self.n**2 * np.pi**2)/(2*self.L(self.x)**2)
         return En
+    
+    def potential(self):
+        pass
         
     
 class harm_pot(basis_set):
@@ -64,3 +71,6 @@ class harm_pot(basis_set):
         En = self.n + 1/2.0
         return En
     
+    def  potential(self):
+        pot = (self.x-5)**2
+        return pot
