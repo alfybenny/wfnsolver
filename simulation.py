@@ -6,7 +6,6 @@ Created on Fri Nov 26 20:42:21 2021
 """
 import numpy as np
 import w_packet
-import basis
 import tools
 from matplotlib import pyplot as plt
 
@@ -38,12 +37,13 @@ psi_x = wavepacket_type.construct_wpkt() # Construct the wavepacket
 ## 1. Particle in a box: particle_box
 ## 2. Harmonic oscillator: harm_pot
 
-# basis_type = 'particle_box'
+# basis_type = '1D_box'
 #------------------------------------------------
 
-cn = tools.get_coeff(x, psi_x, n) # Get coefficients
 
-initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x) # Get initial wavepacket
+cn = tools.get_coeff(x, psi_x, n, '1D_box') # Get coefficients
+
+initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x, '1D_box') # Get initial wavepacket
                                                        # in terms of the basis
                                                        
 # Plot and compare the original wavepacket and the fitted one
@@ -54,6 +54,6 @@ plt.close()
 
 
 # Propogate--------------------------------------
-tools.propogate(x, n, cn, t)
+tools.propogate(x, n, cn, t, '1D_box')
 
 

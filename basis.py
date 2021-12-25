@@ -46,7 +46,8 @@ class particle_box(basis_set):
         return En
     
     def potential(self):
-        pass
+        pot = (self.x-5)**2
+        return pot
         
     
 class harm_pot(basis_set):
