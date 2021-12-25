@@ -10,7 +10,7 @@ import tools
 from matplotlib import pyplot as plt
 
 # Fundamental parameters for the simulation------
-L = 10 # x axis from 0 to L
+L = 4 # x axis from 0 to L
 x_resolution = 2000 # x axis resolution
 x = np.linspace(0, L, x_resolution)
 
@@ -22,8 +22,8 @@ n = np.linspace(1, 150, 150)
 
 # Initial wavepacket-----------------------------
 sigma = 0.5 # Gaussian wavepacket 
-x0 = 5.0 # Initial position of wavepacket
-k0 = 5.0 # Momentum of wavepacket
+x0 = 1.7 # Initial position of wavepacket
+k0 = 0.5 # Momentum of wavepacket
 
 # Define wavepacket =
 ## 1. Gaussian: w_packet.gauss
@@ -37,13 +37,13 @@ psi_x = wavepacket_type.construct_wpkt() # Construct the wavepacket
 ## 1. Particle in a box: particle_box
 ## 2. Harmonic oscillator: harm_pot
 
-# basis_type = '1D_box'
+basis_type = 'harmonic'
 #------------------------------------------------
 
 
-cn = tools.get_coeff(x, psi_x, n, '1D_box') # Get coefficients
+cn = tools.get_coeff(x, psi_x, n, basis_type) # Get coefficients
 
-initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x, '1D_box') # Get initial wavepacket
+initial_wpkt = tools.get_initial_wpkt(x, n, cn, psi_x, basis_type) # Get initial wavepacket
                                                        # in terms of the basis
                                                        
 # Plot and compare the original wavepacket and the fitted one
@@ -54,6 +54,6 @@ plt.close()
 
 
 # Propogate--------------------------------------
-tools.propogate(x, n, cn, t, '1D_box')
+tools.propogate(x, n, cn, t, basis_type)
 
 
