@@ -73,3 +73,11 @@ class harm_pot(basis_set):
     def  potential(self):
         pot = (self.x-2)**2
         return pot
+    
+class morse(basis_set):
+    # Source: https://scipython.com/blog/the-morse-oscillator/
+    def wfn(self):
+        pass
+    
+    def potential(self):
+        pass
