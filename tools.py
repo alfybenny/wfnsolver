@@ -54,7 +54,9 @@ def get_initial_wpkt(x, n, cn, psi_x, basis_type):
 
 def propogate(x, n, cn, t, basis_type):
     
+    y_array = []
     def prop(x, n, t):
+        
         basis_energy = basis_factory.create(basis_type, x, n)
         #######################################################################
         # basis_type = basis.particle_box(x, n)
@@ -76,34 +78,30 @@ def propogate(x, n, cn, t, basis_type):
             #######################################################################
             store_wave_t += cn[i] * phi_n.wfn() * prop(x, n[i], t[j])
             
-        norm_constant = np.linalg.norm(store_wave_t)
-        # norm_wave_t = store_wave_t / norm_constant
+            
+        y_array.append(abs(store_wave_t))
+        store_wave_t = np.zeros(len(x), dtype=complex) # Reflush
         
-        # Plotting the potential energy
+    return y_array
+ 
+        
+def animate(x, y, basis_type, n, out_filename):
+    for i in range(0, len(y)):
         basis_pot = basis_factory.create(basis_type, x, n)
         pot = basis_pot.potential()
         plt.plot(x, pot)
         
-        plt.plot(x, abs(store_wave_t))
+        plt.plot(x, y[i])
+        plt.fill_between(x, y[i], step='pre', alpha = 0.4, color = 'orange')
         # plt.plot(x, abs(norm_wave_t))
         plt.ylim([0,1])
-        plt.savefig(str(j)+'.png')
+        plt.savefig(str(i)+'.png')
         plt.close()
-        store_wave_t = np.zeros(len(x), dtype=complex) # Reflush
-    
+
     images = []
 
-    for filename in range(0, len(t)):
+    for filename in range(0, len(y)):
         images.append(imageio.imread(str(filename)+'.png')) 
-    imageio.mimsave('wave1.gif', images)
-        # phi_n = basis.particle_box(x, n[i])
-        
-        
-        # initial_wpkt += cn[i] * phi_n.wfn() # * prop(n[i], L, t[j])
-        # c1 += cn[i]
-        
-    # return initial_wpkt
-        
-
+    imageio.mimsave(out_filename, images)
     
     
