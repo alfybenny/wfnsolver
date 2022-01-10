@@ -10,7 +10,8 @@ import tools
 from matplotlib import pyplot as plt
 
 # Fundamental parameters for the simulation------
-L = 4 # x axis from 0 to L
+# L = 4 # x axis from 0 to L
+L = 10 # x axis from 0 to L
 x_resolution = 2000 # x axis resolution
 x = np.linspace(0, L, x_resolution)
 
@@ -21,9 +22,10 @@ t = np.linspace(0, 10, 100)
 n = np.linspace(1, 150, 150)
 
 # Initial wavepacket-----------------------------
-sigma = 0.5 # Gaussian wavepacket 
-x0 = 1.7 # Initial position of wavepacket
-k0 = 0.5 # Momentum of wavepacket
+sigma = 1 # Gaussian wavepacket 
+# x0 = 1.7 # Initial position of wavepacket
+x0 = 5 # Initial position of wavepacket
+k0 = 5 # Momentum of wavepacket
 
 # Define wavepacket =
 ## 1. Gaussian: w_packet.gauss
@@ -37,7 +39,8 @@ psi_x = wavepacket_type.construct_wpkt() # Construct the wavepacket
 ## 1. Particle in a box: particle_box
 ## 2. Harmonic oscillator: harm_pot
 
-basis_type = 'harmonic'
+# basis_type = 'harmonic'
+basis_type = '1d_box'
 #------------------------------------------------
 
 
@@ -54,6 +57,10 @@ plt.close()
 
 
 # Propogate--------------------------------------
-tools.propogate(x, n, cn, t, basis_type)
+y_array = tools.propogate(x, n, cn, t, basis_type)
+
+print(len(y_array))
+
+tools.animate(x, y_array, basis_type, n, 'test.gif')
 
 
