@@ -104,4 +104,42 @@ def animate(x, y, basis_type, n, out_filename):
         images.append(imageio.imread(str(filename)+'.png')) 
     imageio.mimsave(out_filename, images)
     
+def print_to_file(x, y, filename):
+    f = open(filename, 'w')
+    for i in range(0, len(y)):
+        f.write('step\n')
+        j = y[i]
+        for k in range(0, len(x)):
+            f.write("  "+str(x[k])+" "+str(j[k])+"\n")
+    f.close()
+        
+def animate_2d(x, y, x_array, y_array):
     
+    def plot_3d(a, b, c, name):
+        
+        X, Y = np.meshgrid(a, b)
+        
+        fig = plt.figure()
+        ax = plt.axes(projection='3d')
+        ax.contour3D(X, Y, c, 50, cmap='jet')
+        ax.set_zlim(0, 0.2)
+        ax.set_xlabel('x')
+        ax.set_ylabel('y')
+        ax.set_zlabel('z')
+        plt.savefig(str(name)+'.png')
+        plt.close()
+        
+    for i in range(0, len(x_array)):
+        z_matrix = []
+        for n in x_array[i]:
+            row = []
+            for m in y_array[i]:
+                row.append(n*m)
+            z_matrix.append(row)
+            
+        plot_3d(x, y, z_matrix, i)
+    images = []
+
+    for filename in range(0, len(y)):
+        images.append(imageio.imread(str(filename)+'.png')) 
+        imageio.mimsave('out_filename.gif', images)    
