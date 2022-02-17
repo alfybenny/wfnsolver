@@ -31,6 +31,9 @@ class gauss(wave_packet):
         ci = 0. + 1j
         pre = 1.0/(self.sigma*np.sqrt(2.0*np.pi))
         psi_x = pre*np.exp(-0.5*((self.x-self.x0)/self.sigma)**2)*np.exp(ci*self.k0*self.x)
+        
+        psi_x_N = psi_x/np.linalg.norm(psi_x)
+        
         return psi_x
 
 ## 2. lorentian wavepacket-----------------------

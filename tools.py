@@ -26,6 +26,7 @@ def get_coeff(x, psi_x, n, basis_type):
         #######################################################################
         # phi_n = basis.particle_box(x, n[i])
         # phi_n = basis.harm_pot(x, n[i])
+        # phi_n.build_basis()
         #######################################################################
         phi_n_x = phi_n.wfn()
 
@@ -33,7 +34,10 @@ def get_coeff(x, psi_x, n, basis_type):
             base += phi_n_x[j]*psi_x[j]*dx
 
         cn[i] = base
+        
+        # print(abs(cn[i]))
 
+    # cn[1] = 0.9
     return cn
 
 def get_initial_wpkt(x, n, cn, psi_x, basis_type):
@@ -45,6 +49,7 @@ def get_initial_wpkt(x, n, cn, psi_x, basis_type):
         #######################################################################
         # phi_n = basis.particle_box(x, n[i])
         # phi_n = basis.harm_pot(x, n[i])
+        # phi_n.build_basis()
         #######################################################################
         
         initial_wpkt += cn[i] * phi_n.wfn() # * prop(n[i], L, t[j])
@@ -89,12 +94,12 @@ def animate(x, y, basis_type, n, out_filename):
     for i in range(0, len(y)):
         basis_pot = basis_factory.create(basis_type, x, n)
         pot = basis_pot.potential()
-        plt.plot(x, pot)
         
         plt.plot(x, y[i])
         plt.fill_between(x, y[i], step='pre', alpha = 0.4, color = 'orange')
+        plt.plot(x, pot, 'ro')
         # plt.plot(x, abs(norm_wave_t))
-        plt.ylim([0,1])
+        plt.ylim([-1,2])
         plt.savefig(str(i)+'.png')
         plt.close()
 

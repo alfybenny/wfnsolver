@@ -17,6 +17,8 @@ def create(basis_type, x, n):
         return basis.harm_pot(x, n)
     elif basis_type.lower() == '1d_box':
         return basis.particle_box(x, n)
+    elif basis_type.lower() == 'num_harmonic':
+        return basis.num_harm_pot(x, n)
     else:
         raise ValueError(format)
     
